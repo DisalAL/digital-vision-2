@@ -1,8 +1,8 @@
 package com.DigitalVisionProject.service.services;
 
 import com.DigitalVisionProject.service.models.AppUser;
-import com.DigitalVisionProject.service.models.ConfirmationToken;
 import com.DigitalVisionProject.service.repositories.AppUserRepository;
+import com.DigitalVisionProject.service.models.ConfirmationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -60,5 +60,9 @@ public class AppUserService implements UserDetailsService {
         //TODO: Send Email
 
         return token;
+    }
+
+    public int enableAppUser(String email) {
+        return appUserRepository.enableAppUser(email);
     }
 }
