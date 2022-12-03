@@ -53,6 +53,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  
+}
+
+h4{
+  color: black;
 }
 
 

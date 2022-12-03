@@ -29,12 +29,10 @@ export class ProductFormComponent implements OnInit {
   price = new FormControl(0,[Validators.required]);
   quantity = new FormControl(0,[Validators.required]);
 
-  productForm!: FormGroup;
-  data!:any;
-  formTitle!: String;
-  product!: Product;
+  productForm: FormGroup;
+  product: Product = {} as Product;
   isSubmitted: boolean = false;
-  savedProduct!:Product;
+  savedProduct:Product =  {} as Product;
   categories: String[] = [];
 
   get formControls() { return this.productForm.controls; }
@@ -45,12 +43,8 @@ export class ProductFormComponent implements OnInit {
   ngOnInit(): void {
     this.categories = Object.values(Category);
     this.buildProductForm();
-    this.data = history.state.data;
-    this.formTitle = this.data.title;
-    this.product = this.data.product;
-    if(this.product != null){
-      this.setValue();
-    }
+    // this.product = history.state.data.product;
+    // if(this.product !== null){this.setValue()}
   }
 
   public buildProductForm():void{
@@ -79,7 +73,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   public saveProduct(){
-    this.isSubmitted = true;
     this.savedProduct.title = this.productForm.get('title')?.value;
     this.savedProduct.description = this.productForm.get('description')?.value;
     this.savedProduct.image = this.productForm.get('image')?.value;
@@ -91,14 +84,18 @@ export class ProductFormComponent implements OnInit {
     if(this.productForm.invalid){
       this.invalidProductForm();
     }
-    
-    if(this.formTitle == 'Add new product'){
-      this.productService.addNewProduct(this.savedProduct);
-      this.router.navigate(["/home"]);
-    }
 
-    this.productService.updateProduct(this.savedProduct);
-    this.router.navigate(["/home"]);
+    if(!this.productForm.invalid){
+      // if(this.product === null){
+        this.productService.addNewProduct(this.savedProduct);
+        this.router.navigate(["/home"]);
+      // }
+  
+      // this.productService.updateProduct(this.savedProduct);
+      // this.router.navigate(["/home"]);
+    }
+    
+    
   }
 
   public invalidProductForm(){
